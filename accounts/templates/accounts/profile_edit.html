@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}내 계정 수정{% endblock %}
+
+{% block content %}
+<div class="profile-edit-container">
+  <h2 class="profile-title">내 계정 정보 수정</h2>
+
+  <form method="post" class="profile-form">
+    {% csrf_token %}
+
+    <div class="profile-fields">
+      {{ form.as_p }}
+    </div>
+
+    <button type="submit" class="save-btn">저장하기</button>
+    <a href="{% url 'accounts:profile' %}" class="cancel-btn">취소</a>
+  </form>
+</div>
+
+<style>
+  /* ===== 프로필 수정 페이지 전용 스타일 ===== */
+
+  .profile-edit-container {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 32px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(180, 190, 200, 0.35);
+  }
+
+  .profile-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 28px;
+  }
+
+  .profile-form p {
+    margin-bottom: 18px;
+  }
+
+  .profile-form label {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  .profile-form input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    transition: 0.15s;
+  }
+
+  .profile-form input:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: #ffffff;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.4);
+  }
+
+  .save-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px 0;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.15s;
+    box-shadow: 0 12px 25px rgba(37, 99, 235, 0.25);
+  }
+
+  .save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 35px rgba(37, 99, 235, 0.32);
+  }
+
+  .cancel-btn {
+    display: inline-block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    background: #e5e7eb;
+    text-decoration: none;
+    transition: 0.15s;
+  }
+
+  .cancel-btn:hover {
+    background: #d5d6db;
+  }
+</style>
+
+{% endblock %}

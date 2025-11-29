@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}내 계정{% endblock %}
+
+{% block content %}
+<div class="profile-view-container">
+  <h2 class="profile-title">내 계정</h2>
+
+  <div class="profile-card">
+    <div class="profile-row">
+      <span class="label">아이디</span>
+      <span class="value">{{ user.username }}</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="label">이메일</span>
+      <span class="value">{{ user.email }}</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="label">이름</span>
+      <span class="value">{{ user.first_name }}</span>
+    </div>
+
+    <div class="profile-row">
+      <span class="label">성</span>
+      <span class="value">{{ user.last_name }}</span>
+    </div>
+  </div>
+
+  <a href="{% url 'accounts:profile_edit' %}" class="edit-btn">내 정보 수정하기</a>
+</div>
+
+<style>
+  /* ===== 프로필 조회 화면 스타일 ===== */
+
+  .profile-view-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 0 16px;
+  }
+
+  .profile-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 28px;
+    color: #1f2937;
+  }
+
+  .profile-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px 28px;
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(180, 190, 200, 0.32);
+  }
+
+  .profile-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .profile-row:last-child {
+    border-bottom: none;
+  }
+
+  .label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+  }
+
+  .value {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .edit-btn {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    color: white;
+    text-align: center;
+    padding: 12px 0;
+    margin-top: 24px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.24);
+    transition: 0.15s;
+  }
+
+  .edit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 34px rgba(37, 99, 235, 0.33);
+  }
+</style>
+
+{% endblock %}

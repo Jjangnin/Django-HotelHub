@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}객실 상세{% endblock %}
+
+{% block content %}
+<div class="room-detail-container">
+  <div class="room-detail-header">
+    <h2 class="room-title">
+      객실 #{{ room.number }}
+      <span class="room-name">{{ room.name }}</span>
+    </h2>
+    <p class="room-meta">
+      <span class="chip">{{ room.get_category_display }}</span>
+      <span class="chip">정원 {{ room.capacity }}명</span>
+      <span class="chip">1박 {{ room.price_per_night }}원</span>
+    </p>
+  </div>
+
+  <div class="room-body">
+    <h3>객실 소개</h3>
+    <p class="room-desc">
+      {{ room.description|default:"등록된 객실 설명이 없습니다." }}
+    </p>
+  </div>
+
+  <div class="room-actions">
+    <a href="{% url 'reservations:create' %}" class="room-reserve-btn">
+      이 객실 예약하러 가기
+    </a>
+    <a href="{% url 'rooms:list' %}" class="room-back-link">
+      ← 객실 목록으로 돌아가기
+    </a>
+  </div>
+</div>
+
+<style>
+  /* ===== 객실 상세 페이지 스타일 ===== */
+
+  .room-detail-container {
+    background: #ffffff;
+    padding: 24px 28px;
+    border-radius: 16px;
+    box-shadow:
+      0 16px 32px rgba(0, 0, 0, 0.07),
+      0 0 0 1px rgba(220, 224, 232, 0.9);
+  }
+
+  .room-detail-header {
+    border-bottom: 1px solid #edeff3;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+  }
+
+  .room-title {
+    font-size: 22px;
+    margin: 0 0 6px;
+  }
+
+  .room-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: #4b5563;
+    margin-left: 6px;
+  }
+
+  .room-meta {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #f3f4f6;
+    font-size: 12px;
+    color: #4b5563;
+  }
+
+  .room-body h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .room-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #374151;
+    white-space: pre-line;
+  }
+
+  .room-actions {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .room-reserve-btn {
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    color: white;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.3);
+    transition: 0.15s;
+  }
+
+  .room-reserve-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 30px rgba(37, 99, 235, 0.35);
+  }
+
+  .room-back-link {
+    font-size: 13px;
+    color: #6b7280;
+    text-decoration: none;
+  }
+
+  .room-back-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+{% endblock %}

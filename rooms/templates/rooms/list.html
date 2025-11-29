@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% block title %}객실 목록{% endblock %}
+
+{% block content %}
+<div class="rooms-page">
+
+  <h2 class="page-title">객실 목록</h2>
+
+  <!-- 필터 -->
+  <form method="get" class="filter-box">
+    <div class="filter-row">
+      <div class="filter-item">{{ form.q }}</div>
+      <div class="filter-item">{{ form.category }}</div>
+      <div class="filter-item">{{ form.status }}</div>
+      <button type="submit" class="filter-btn">필터 적용</button>
+    </div>
+  </form>
+
+  <!-- 객실 카드 리스트 -->
+  <div class="room-grid">
+    {% for r in rooms %}
+      <div class="room-card">
+        <div class="room-header">
+          <div class="room-number">#{{ r.number }}</div>
+          {% if r.is_available %}
+            <span class="room-chip available">예약 가능</span>
+          {% else %}
+            <span class="room-chip unavailable">예약 불가</span>
+          {% endif %}
+        </div>
+
+        <h3 class="room-name">{{ r.name }}</h3>
+
+        <p class="room-info">
+          <span>{{ r.get_category_display }} · 정원 {{ r.capacity }}명</span><br>
+          <span class="room-price">1박 {{ r.price_per_night }}원</span>
+        </p>
+
+        <div class="room-actions">
+          <a class="detail-btn" href="{% url 'rooms:detail' r.pk %}">자세히 보기</a>
+        </div>
+      </div>
+    {% empty %}
+      <p style="grid-column: 1 / -1; text-align:center; color:#666;">검색 결과가 없습니다.</p>
+    {% endfor %}
+  </div>
+</div>
+
+
+<style>
+/* ==== 객실 리스트 전체 컨테이너 ==== */
+.rooms-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 제목 */
+.page-title {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+/* ==== 필터 박스 ==== */
+.filter-box {
+  background: #ffffff;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.07), 0 0 0 1px rgba(220,220,220,0.8);
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.filter-item select,
+.filter-item input {
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  width: 180px;
+}
+
+.filter-btn {
+  padding: 8px 14px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.filter-btn:hover {
+  background: #1e4fc7;
+}
+
+/* ==== 그리드 ==== */
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+/* ==== 카드 ==== */
+.room-card {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow:
+    0 18px 32px rgba(0,0,0,0.06),
+    0 0 0 1px rgba(225,225,225,0.9);
+  transition: 0.15s;
+}
+.room-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 24px 40px rgba(0,0,0,0.08),
+    0 0 0 1px rgba(210,210,210,0.9);
+}
+
+/* 카드 헤더 */
+.room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.room-number {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* 상태 칩 */
+.room-chip {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.available {
+  background: #e0f7e9;
+  color: #0a8a43;
+  border: 1px solid #b0eacb;
+}
+
+.unavailable {
+  background: #ffecec;
+  color: #cc0000;
+  border: 1px solid #ffbaba;
+}
+
+/* 객실 이름 */
+.room-name {
+  margin: 4px 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* 객실 정보 */
+.room-info {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #4b5563;
+}
+.room-price {
+  font-weight: 600;
+}
+
+/* 버튼 */
+.detail-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  background: #1d4ed8;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+.detail-btn:hover {
+  background: #183fb3;
+}
+</style>
+
+{% endblock %}

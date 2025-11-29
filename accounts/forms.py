@@ -1,0 +1,21 @@
+# accounts/forms.py
+from django import forms
+from django.contrib.auth.models import User
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["username", "email", "first_name", "last_name"]
+        labels = {
+            "username": "아이디",
+            "email": "이메일",
+            "first_name": "이름",
+            "last_name": "성",
+        }
+        widgets = {
+            "username": forms.TextInput(attrs={"class": "form-control"}),
+            "email": forms.EmailInput(attrs={"class": "form-control"}),
+            "first_name": forms.TextInput(attrs={"class": "form-control"}),
+            "last_name": forms.TextInput(attrs={"class": "form-control"}),
+        }

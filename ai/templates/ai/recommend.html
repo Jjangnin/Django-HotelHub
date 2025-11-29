@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block title %}AI 객실 추천{% endblock %}
+
+{% block content %}
+<div class="ai-container">
+  <h2 class="ai-title">AI 객실 추천</h2>
+
+  <form method="post" class="ai-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label>인원</label>
+      <input type="number" name="guests" min="1" value="2" class="input-field">
+    </div>
+
+    <div class="form-group">
+      <label>1박 예산 (원, 선택)</label>
+      <input type="number" name="budget" min="0" placeholder="예: 100000" class="input-field">
+      <small class="note">* 비워두면 예산 제한 없음</small>
+    </div>
+
+    <div class="form-group">
+      <label>원하는 분위기 (선택)</label>
+      <input type="text" name="mood" placeholder="예: 조용한, 가족 여행, 감성적인…" class="input-field">
+    </div>
+
+    <button type="submit" class="ai-btn">AI에게 추천 받기</button>
+  </form>
+
+  {% if suggestion_text %}
+    <div class="ai-result">
+      <h3>AI 추천 결과</h3>
+      <pre class="ai-text">{{ suggestion_text }}</pre>
+    </div>
+  {% endif %}
+
+  {% if recommended_rooms %}
+    <h3 class="room-title">조건에 맞는 객실 목록</h3>
+
+    <div class="room-list">
+      {% for r in recommended_rooms %}
+      <div class="room-card">
+        <h4>{{ r.name }} <span class="room-number">#{{ r.number }}</span></h4>
+        <p><strong>정원:</strong> {{ r.capacity }}명</p>
+        <p><strong>1박 요금:</strong> {{ r.price_per_night }}원</p>
+        <p><strong>유형:</strong> {{ r.get_category_display }}</p>
+        <a href="{% url 'rooms:detail' r.pk %}" class="detail-btn">자세히 보기</a>
+      </div>
+      {% endfor %}
+    </div>
+
+  {% elif suggestion_text %}
+    <p class="no-room">조건에 맞는 객실이 없습니다.</p>
+  {% endif %}
+</div>
+
+<style>
+/* ===== AI 추천 페이지 스타일 ===== */
+
+.ai-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 0 16px;
+}
+
+.ai-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #1f2937;
+}
+
+.ai-form {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(180, 190, 200, 0.35);
+  margin-bottom: 24px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  transition: 0.15s;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: white;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.4);
+}
+
+.note {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.ai-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #1d4ed8, #2563eb);
+  border-radius: 999px;
+  color: white;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 12px;
+  box-shadow: 0 12px 25px rgba(37, 99, 235, 0.25);
+  transition: 0.15s;
+}
+
+.ai-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(37, 99, 235, 0.3);
+}
+
+/* ===== AI 결과 출력 ===== */
+.ai-result {
+  background: #f9fafb;
+  border-left: 4px solid #2563eb;
+  padding: 18px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.ai-result h3 {
+  margin-bottom: 10px;
+  color: #1f2937;
+}
+
+.ai-text {
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ===== 객실 카드 목록 ===== */
+.room-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.room-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow:
+    0 12px 25px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(180, 190, 200, 0.3);
+}
+
+.room-card h4 {
+  margin-bottom: 8px;
+}
+
+.room-number {
+  font-size: 12px;
+  background: #e5e7eb;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-left: 6px;
+}
+
+.detail-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: #2563eb;
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.detail-btn:hover {
+  background: #1e40af;
+}
+
+.no-room {
+  margin-top: 10px;
+  color: #6b7280;
+  font-style: italic;
+}
+</style>
+
+{% endblock %}

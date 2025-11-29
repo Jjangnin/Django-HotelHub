@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block title %}예약하기{% endblock %}
+
+{% block content %}
+
+<div class="reserve-container">
+  <h2 class="reserve-title">예약하기</h2>
+
+  <!-- 전체 오류 영역 -->
+  {% if form.non_field_errors %}
+  <div class="form-errors">
+    <ul>
+      {% for e in form.non_field_errors %}
+        <li>{{ e }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <form method="post" class="reserve-form">
+    {% csrf_token %}
+
+    <div class="reserve-grid">
+      <div class="reserve-field">
+        <label for="{{ form.room.id_for_label }}">객실</label>
+        {{ form.room }}
+        {% if form.room.errors %}
+          <small class="error">{{ form.room.errors }}</small>
+        {% endif %}
+      </div>
+
+      <div class="reserve-field">
+        <label for="{{ form.check_in.id_for_label }}">체크인</label>
+        {{ form.check_in }}
+        {% if form.check_in.errors %}
+          <small class="error">{{ form.check_in.errors }}</small>
+        {% endif %}
+      </div>
+
+      <div class="reserve-field">
+        <label for="{{ form.check_out.id_for_label }}">체크아웃</label>
+        {{ form.check_out }}
+        {% if form.check_out.errors %}
+          <small class="error">{{ form.check_out.errors }}</small>
+        {% endif %}
+      </div>
+
+      <div class="reserve-field">
+        <label for="{{ form.guests.id_for_label }}">인원</label>
+        {{ form.guests }}
+        {% if form.guests.errors %}
+          <small class="error">{{ form.guests.errors }}</small>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="reserve-field-full">
+      <label for="{{ form.request_notes.id_for_label }}">요청사항</label>
+      {{ form.request_notes }}
+      {% if form.request_notes.errors %}
+        <small class="error">{{ form.request_notes.errors }}</small>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="reserve-btn">예약 등록</button>
+  </form>
+</div>
+
+<style>
+  /* ===== 예약 페이지 스타일 ===== */
+
+  .reserve-container {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow:
+      0 12px 25px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(209, 213, 219, 0.8);
+  }
+
+  .reserve-title {
+    font-size: 22px;
+    margin-bottom: 18px;
+    font-weight: 700;
+    border-bottom: 2px solid #ececec;
+    padding-bottom: 8px;
+  }
+
+  .reserve-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .reserve-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .reserve-field,
+  .reserve-field-full {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .reserve-field-full {
+    grid-column: span 4;
+  }
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  input, select, textarea {
+    border: 1px solid #d1d5db;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f9fafb;
+    transition: 0.2s;
+    font-size: 14px;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #6366f1;
+    background: #ffffff;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+  }
+
+  .reserve-btn {
+    width: 180px;
+    padding: 12px;
+    background: linear-gradient(90deg, #4f46e5, #6366f1);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 4px;
+    align-self: flex-start;
+    transition: 0.2s;
+  }
+
+  .reserve-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .form-errors {
+    background: #ffecec;
+    border: 1px solid #ffbaba;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+
+  .form-errors ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  .error {
+    color: #c0392b;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+</style>
+
+{% endblock %}

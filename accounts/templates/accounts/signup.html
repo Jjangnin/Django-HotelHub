@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}회원가입{% endblock %}
+
+{% block content %}
+<div class="signup-container">
+  <h2 class="signup-title">회원가입</h2>
+
+  <form method="post" class="signup-form">
+    {% csrf_token %}
+
+    <div class="form-fields">
+      {{ form.as_p }}
+    </div>
+
+    <button type="submit" class="signup-btn">가입하기</button>
+
+    <p class="login-link">
+      이미 계정이 있으신가요?
+      <a href="{% url 'accounts:login' %}">로그인</a>
+    </p>
+  </form>
+</div>
+
+<style>
+  /* ===== 회원가입 페이지 스타일 ===== */
+
+  .signup-container {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 32px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(180, 190, 200, 0.35);
+  }
+
+  .signup-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #111827;
+  }
+
+  .signup-form p {
+    margin-bottom: 18px;
+  }
+
+  .signup-form label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+  }
+
+  .signup-form input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    transition: .15s;
+  }
+
+  .signup-form input:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: #ffffff;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.4);
+  }
+
+  .signup-btn {
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: .15s;
+    box-shadow: 0 12px 25px rgba(37, 99, 235, 0.25);
+  }
+
+  .signup-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 35px rgba(37, 99, 235, 0.32);
+  }
+
+  .login-link {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+    color: #6b7280;
+  }
+
+  .login-link a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+{% endblock %}

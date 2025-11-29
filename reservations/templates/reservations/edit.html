@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}예약 수정{% endblock %}
+
+{% block content %}
+<div class="reserve-edit-container">
+  <h2 class="reserve-edit-title">예약 수정 (관리자)</h2>
+
+  <p class="reserve-meta">
+    <span><strong>고객</strong> {{ obj.user.username }}</span>
+    <span class="divider">|</span>
+    <span><strong>객실</strong> #{{ obj.room.number }}</span>
+  </p>
+
+  <form method="post" class="reserve-edit-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="reserve-edit-btn">저장</button>
+  </form>
+</div>
+
+<style>
+  /* ===== 관리자 예약 수정 페이지 스타일 ===== */
+
+  .reserve-edit-container {
+    max-width: 520px;
+    margin: 32px auto;
+    padding: 24px 28px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow:
+      0 16px 32px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(209, 213, 219, 0.8);
+  }
+
+  .reserve-edit-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .reserve-meta {
+    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 18px;
+  }
+
+  .reserve-meta .divider {
+    margin: 0 6px;
+    color: #d1d5db;
+  }
+
+  .reserve-edit-form p {
+    margin-bottom: 16px;
+  }
+
+  .reserve-edit-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .reserve-edit-form input,
+  .reserve-edit-form select,
+  .reserve-edit-form textarea {
+    width: 100%;
+    margin-top: 6px;
+    padding: 9px 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    transition: 0.15s;
+  }
+
+  .reserve-edit-form input:focus,
+  .reserve-edit-form select:focus,
+  .reserve-edit-form textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: #ffffff;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35);
+  }
+
+  .reserve-edit-btn {
+    margin-top: 4px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.3);
+    transition: 0.15s;
+  }
+
+  .reserve-edit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(37, 99, 235, 0.35);
+  }
+</style>
+{% endblock %}

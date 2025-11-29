@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}HotelHub{% endblock %}</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'core_v2.css' %}">
+</head>
+<body>
+  <header>
+    <!-- 로고 / 브랜드 -->
+    <h1><a href="{% url 'dashboard:index' %}">HotelHub</a></h1>
+
+    <!-- 우측 메뉴 + AI 폼 -->
+    <div class="header-right">
+      <nav>
+        <a href="{% url 'rooms:list' %}">객실</a>
+        <a href="{% url 'reservations:list' %}">예약</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'accounts:profile' %}">내 계정</a>
+          <a href="{% url 'accounts:logout' %}">로그아웃</a>
+        {% else %}
+          <a href="{% url 'accounts:login' %}">로그인</a>
+          <a href="{% url 'accounts:signup' %}">회원가입</a>
+        {% endif %}
+        {% if user.is_staff %}
+          <span class="admin-badge">(관리자)</span>
+        {% endif %}
+      </nav>
+
+      <!-- AI 빠른 추천 검색바 -->
+      <form action="{% url 'ai:recommend' %}" method="POST" class="ai-quick-form">
+        {% csrf_token %}
+        <input
+          type="text"
+          name="query"
+          placeholder="예: 조용하고 저렴한 객실 추천해줘"
+        >
+        <button type="submit">AI 추천</button>
+      </form>
+    </div>
+  </header>
+
+  <main>
+    {% for message in messages %}
+      <p class="msg">{{ message }}</p>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <style>
+    /* ===== base 전용 약간의 추가 스타일 ===== */
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .admin-badge {
+      margin-left: 6px;
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .ai-quick-form {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      max-width: 420px;
+      margin-top: 4px;
+    }
+
+    .ai-quick-form input {
+      flex: 1;
+    }
+  </style>
+</body>
+</html>

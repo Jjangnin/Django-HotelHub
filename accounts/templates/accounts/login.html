@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}로그인{% endblock %}
+
+{% block content %}
+<div class="login-container">
+  <h2 class="login-title">로그인</h2>
+
+  <form method="post" class="login-form">
+    {% csrf_token %}
+    <div class="form-fields">
+      {{ form.as_p }}
+    </div>
+
+    <button type="submit" class="login-btn">로그인</button>
+  </form>
+
+  <p class="login-link-text">
+    아직 계정이 없나요?
+    <a href="{% url 'accounts:signup' %}" class="login-link">회원가입</a>
+  </p>
+</div>
+
+<style>
+  /* ===== 로그인 페이지 전용 스타일 ===== */
+  .login-container {
+    max-width: 420px;
+    margin: 40px auto;
+    padding: 32px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(180, 190, 200, 0.35);
+    text-align: center;
+  }
+
+  .login-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #111827;
+    letter-spacing: 0.02em;
+  }
+
+  .login-form p {
+    text-align: left;
+    margin-bottom: 14px;
+  }
+
+  .login-form label {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  .login-form input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    transition: 0.15s;
+  }
+
+  .login-form input:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: #ffffff;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.4);
+  }
+
+  .login-btn {
+    width: 100%;
+    margin-top: 18px;
+    padding: 10px 0;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 12px 25px rgba(37, 99, 235, 0.25);
+    transition: 0.15s;
+  }
+
+  .login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px rgba(37, 99, 235, 0.32);
+  }
+
+  .login-link-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #4b5563;
+  }
+
+  .login-link {
+    color: #1d4ed8;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .login-link:hover {
+    text-decoration: underline;
+  }
+</style>
+{% endblock %}
